@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐄 Farm Breed with AI - Smart Animal Breeding Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🐄</span>
+                <span class="logo-text">Farm Breed AI</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                        <i class="fas fa-chart-line"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#animals" class="nav-link" data-section="animals">
+                        <i class="fas fa-paw"></i> Animals
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#breeding" class="nav-link" data-section="breeding">
+                        <i class="fas fa-heart"></i> Breeding
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#ai-advisor" class="nav-link" data-section="ai-advisor">
+                        <i class="fas fa-robot"></i> AI Advisor
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#schedule" class="nav-link" data-section="schedule">
+                        <i class="fas fa-calendar"></i> Schedule
+                    </a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login/Register Modal -->
+    <div id="auth-modal" class="auth-modal">
+        <div class="auth-container">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <span class="logo-icon">🐄</span>
+                    <span class="logo-text">Farm Breed AI</span>
+                </div>
+                <p class="auth-subtitle">Welcome to your AI-powered farm management</p>
+            </div>
+            
+            <!-- Login Form -->
+            <div id="login-form" class="auth-form active">
+                <h2>🔐 Login to Your Farm</h2>
+                <form id="login-form-element">
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" required placeholder="Enter your email">
+                        <i class="fas fa-envelope input-icon"></i>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required placeholder="Enter your password">
+                        <i class="fas fa-lock input-icon"></i>
+                        <button type="button" class="password-toggle" onclick="togglePassword('login-password')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" id="remember-me">
+                            <span class="checkmark"></span>
+                            Remember me
+                        </label>
+                        <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="btn-auth">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Login to Farm
+                    </button>
+                </form>
+                <div class="auth-switch">
+                    <p>Don't have an account? <a href="#" onclick="showRegister()">Create Account</a></p>
+                </div>
+            </div>
+            
+            <!-- Register Form -->
+            <div id="register-form" class="auth-form">
+                <h2>🌾 Join Our Farm Community</h2>
+                <form id="register-form-element">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="register-firstname">First Name</label>
+                            <input type="text" id="register-firstname" required placeholder="John">
+                            <i class="fas fa-user input-icon"></i>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-lastname">Last Name</label>
+                            <input type="text" id="register-lastname" required placeholder="Doe">
+                            <i class="fas fa-user input-icon"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email Address</label>
+                        <input type="email" id="register-email" required placeholder="john@farm.com">
+                        <i class="fas fa-envelope input-icon"></i>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-farm">Farm Name</label>
+                        <input type="text" id="register-farm" required placeholder="Green Valley Farm">
+                        <i class="fas fa-home input-icon"></i>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" required placeholder="Create a strong password">
+                        <i class="fas fa-lock input-icon"></i>
+                        <button type="button" class="password-toggle" onclick="togglePassword('register-password')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm-password">Confirm Password</label>
+                        <input type="password" id="register-confirm-password" required placeholder="Confirm your password">
+                        <i class="fas fa-lock input-icon"></i>
+                        <button type="button" class="password-toggle" onclick="togglePassword('register-confirm-password')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label class="terms-checkbox">
+                            <input type="checkbox" id="accept-terms" required>
+                            <span class="checkmark"></span>
+                            I agree to the <a href="#" class="terms-link">Terms of Service</a> and <a href="#" class="terms-link">Privacy Policy</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-auth">
+                        <i class="fas fa-user-plus"></i>
+                        Create Farm Account
+                    </button>
+                </form>
+                <div class="auth-switch">
+                    <p>Already have an account? <a href="#" onclick="showLogin()">Login Here</a></p>
+                </div>
+            </div>
+            
+            <!-- Demo Access -->
+            <div class="demo-access">
+                <div class="demo-divider">
+                    <span>or</span>
+                </div>
+                <button class="btn-demo" onclick="loginAsDemo()">
+                    <i class="fas fa-play"></i>
+                    Try Demo Mode
+                </button>
+                <p class="demo-note">Experience the app with sample data</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content" style="display: none;">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="content-section active">
+            <div class="section-header">
+                <h1>🐄 Farm Dashboard</h1>
+                <p>Welcome to your AI-powered farm breeding assistant</p>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🐮</div>
+                    <div class="stat-content">
+                        <h3 id="total-animals">0</h3>
+                        <p>Total Animals</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💕</div>
+                    <div class="stat-content">
+                        <h3 id="ready-breeding">0</h3>
+                        <p>Ready for Breeding</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🤰</div>
+                    <div class="stat-content">
+                        <h3 id="pregnant">0</h3>
+                        <p>Pregnant</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🧬</div>
+                    <div class="stat-content">
+                        <h3 id="avg-score">0</h3>
+                        <p>Avg Breeding Score</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h2>🚀 Quick Actions</h2>
+                <div class="action-grid">
+                    <button class="action-btn" onclick="showSection('animals')">
+                        <i class="fas fa-plus"></i>
+                        <span>Add New Animal</span>
+                    </button>
+                    <button class="action-btn" onclick="showSection('breeding')">
+                        <i class="fas fa-heart"></i>
+                        <span>Find Matches</span>
+                    </button>
+                    <button class="action-btn" onclick="showSection('ai-advisor')">
+                        <i class="fas fa-robot"></i>
+                        <span>Ask AI Advisor</span>
+                    </button>
+                    <button class="action-btn" onclick="analyzePhoto()">
+                        <i class="fas fa-camera"></i>
+                        <span>Analyze Photo</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+                <h2>📊 Recent Activity</h2>
+                <div class="activity-list" id="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon">🐄</div>
+                        <div class="activity-content">
+                            <p>New animal "Bella" added to the farm</p>
+                            <span class="activity-time">2 hours ago</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">💕</div>
+                        <div class="activity-content">
+                            <p>Breeding recommendation generated for "Max"</p>
+                            <span class="activity-time">4 hours ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Animals Section -->
+        <section id="animals" class="content-section">
+            <div class="section-header">
+                <h1>🐮 Animal Management</h1>
+                <button class="btn-primary" onclick="openAddAnimalModal()">
+                    <i class="fas fa-plus"></i> Add New Animal
+                </button>
+            </div>
+
+            <!-- Animal Filters -->
+            <div class="filters">
+                <select id="type-filter" class="filter-select">
+                    <option value="">All Types</option>
+                    <option value="cow">🐄 Cow</option>
+                    <option value="sheep">🐑 Sheep</option>
+                    <option value="goat">🐐 Goat</option>
+                    <option value="pig">🐷 Pig</option>
+                </select>
+                <select id="status-filter" class="filter-select">
+                    <option value="">All Status</option>
+                    <option value="READY">Ready for Breeding</option>
+                    <option value="PREGNANT">Pregnant</option>
+                    <option value="NOT_READY">Not Ready</option>
+                </select>
+                <input type="text" id="search-animals" placeholder="Search animals..." class="search-input">
+            </div>
+
+            <!-- Animals Grid -->
+            <div class="animals-grid" id="animals-grid">
+                <!-- Animals will be loaded here dynamically -->
+            </div>
+        </section>
+
+        <!-- Breeding Section -->
+        <section id="breeding" class="content-section">
+            <div class="section-header">
+                <h1>💕 Breeding Management</h1>
+                <p>AI-powered breeding recommendations and matchmaking</p>
+            </div>
+
+            <div class="breeding-content">
+                <div class="breeding-box">
+                    <h2>🧬 Breeding Box Analysis</h2>
+                    <div class="breeding-form">
+                        <div class="form-group">
+                            <label>Select Animal 1:</label>
+                            <select id="animal1-select" class="form-select">
+                                <option value="">Choose an animal...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Select Animal 2:</label>
+                            <select id="animal2-select" class="form-select">
+                                <option value="">Choose an animal...</option>
+                            </select>
+                        </div>
+                        <button class="btn-primary" onclick="analyzeBreedingBox()">
+                            <i class="fas fa-dna"></i> Analyze Compatibility
+                        </button>
+                    </div>
+                </div>
+
+                <div class="recommendations">
+                    <h2>🎯 AI Recommendations</h2>
+                    <div class="recommendations-list" id="recommendations-list">
+                        <!-- Recommendations will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Advisor Section -->
+        <section id="ai-advisor" class="content-section">
+            <div class="section-header">
+                <h1>🤖 AI Breeding Advisor</h1>
+                <p>Get expert advice on animal breeding and farm management</p>
+            </div>
+
+            <div class="ai-chat">
+                <div class="chat-container">
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message ai-message">
+                            <div class="message-avatar">🤖</div>
+                            <div class="message-content">
+                                <p>Hello! I'm your AI breeding advisor. Ask me anything about animal breeding, health, or farm management!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="chat-input" placeholder="Ask me about breeding, health, or farm management...">
+                        <button onclick="sendMessage()" class="send-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Schedule Section -->
+        <section id="schedule" class="content-section">
+            <div class="section-header">
+                <h1>📅 Breeding Schedule</h1>
+                <button class="btn-primary" onclick="openScheduleModal()">
+                    <i class="fas fa-plus"></i> Add Schedule Item
+                </button>
+            </div>
+
+            <div class="schedule-content">
+                <div class="schedule-calendar">
+                    <h2>📆 This Week's Schedule</h2>
+                    <div class="schedule-list" id="schedule-list">
+                        <!-- Schedule items will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <!-- Add Animal Modal -->
+    <div id="add-animal-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🐮 Add New Animal</h2>
+                <span class="close" onclick="closeModal('add-animal-modal')">&times;</span>
+            </div>
+            <form id="add-animal-form" class="modal-body">
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" id="animal-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Type:</label>
+                    <select id="animal-type" required>
+                        <option value="">Select type...</option>
+                        <option value="cow">🐄 Cow</option>
+                        <option value="sheep">🐑 Sheep</option>
+                        <option value="goat">🐐 Goat</option>
+                        <option value="pig">🐷 Pig</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Breed:</label>
+                    <input type="text" id="animal-breed" required>
+                </div>
+                <div class="form-group">
+                    <label>Gender:</label>
+                    <select id="animal-gender" required>
+                        <option value="">Select gender...</option>
+                        <option value="MALE">♂️ Male</option>
+                        <option value="FEMALE">♀️ Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Birth Date:</label>
+                    <input type="date" id="animal-birth-date" required>
+                </div>
+                <div class="form-group">
+                    <label>Weight (kg):</label>
+                    <input type="number" id="animal-weight" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label>Photo:</label>
+                    <input type="file" id="animal-photo" accept="image/*">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal('add-animal-modal')">Cancel</button>
+                    <button type="submit" class="btn-primary">Add Animal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Photo Analysis Modal -->
+    <div id="photo-analysis-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📸 Photo Analysis</h2>
+                <span class="close" onclick="closeModal('photo-analysis-modal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="photo-upload-area" id="photo-upload-area">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Drop your animal photo here or click to browse</p>
+                    <input type="file" id="photo-input" accept="image/*" hidden>
+                </div>
+                <div class="analysis-result" id="analysis-result" style="display: none;">
+                    <!-- Analysis results will be shown here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
