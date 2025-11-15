@@ -46,6 +46,21 @@ public class GeminiService {
             throw new RuntimeException("Failed to analyze image with Gemini: " + e.getMessage(), e);
         }
     }
+
+    public String performMelezAnalysis(String parentsJson, String yavruPrompt) {
+        try {
+            String prompt = yavruPrompt + "\nParents:\n" + parentsJson + "\nReturn only strict JSON.";
+            Map<String, Object> requestBody = createTextRequest(prompt);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers);
+            String url = geminiConfig.getApiUrl() + "?key=" + geminiConfig.getApiKey();
+            ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
+            return extractTextFromGeminiResponse(response.getBody());
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to perform melez analysis: " + e.getMessage(), e);
+        }
+    }
     
     @Cacheable(value = "breedingQuestions", key = "#animalAnalysis.hashCode()")
     public String generateBreedingQuestions(String animalAnalysis) {
@@ -93,6 +108,20 @@ public class GeminiService {
             return extractTextFromGeminiResponse(response.getBody());
         } catch (Exception e) {
             throw new RuntimeException("Failed to generate breeding recommendations: " + e.getMessage(), e);
+        }
+    }
+
+    public String generateWithPrompt(String prompt) {
+        try {
+            Map<String, Object> requestBody = createTextRequest(prompt);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers);
+            String url = geminiConfig.getApiUrl() + "?key=" + geminiConfig.getApiKey();
+            ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
+            return extractTextFromGeminiResponse(response.getBody());
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to generate content: " + e.getMessage(), e);
         }
     }
     

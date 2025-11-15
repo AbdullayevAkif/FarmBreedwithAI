@@ -49,8 +49,13 @@ public class Animal {
 
 
      Integer breedingScore;
+     @Column(length = 2000)
      String geneticsTraits;
      String temperament;
+     String color;
+     String size;
+     @Column(length = 2000)
+     String notes;
      Integer offSpringCount;
      LocalDateTime createdAt;
      LocalDateTime updatedAt;

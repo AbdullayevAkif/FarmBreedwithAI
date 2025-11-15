@@ -71,7 +71,6 @@ public class User implements UserDetails {
         this.updatedAt = LocalDateTime.now();
     }
 
-    // UserDetails implementation
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role));
@@ -102,7 +101,6 @@ public class User implements UserDetails {
         return enabled;
     }
 
-    // Helper methods
     public String getFullName() {
         return firstName + " " + lastName;
     }

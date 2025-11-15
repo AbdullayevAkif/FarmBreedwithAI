@@ -14,7 +14,7 @@ public class AuthResponse {
     private Long id;
     private String firstName;
     private String lastName;
-    private String email;
+      private String email;
     private String farmName;
     private String role;
     private Long expiresIn;

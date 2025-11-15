@@ -21,6 +21,13 @@ public class BreedingSchedule {
     @JoinColumn(name = "animal_id")
     private Animal animal;
     
+    private String title;
+    private String type;
+    private String description;
+    private String species;
+    private Integer durationDays;
+    
+    private LocalDate startDate;
     private LocalDate scheduledDate;
     private String notes;
     private Boolean completed;

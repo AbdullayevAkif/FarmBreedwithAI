@@ -32,6 +32,26 @@ public class ScheduleService {
         return scheduleRepository.save(schedule);
     }
     
+    public BreedingSchedule update(Long id, BreedingSchedule incoming) {
+        BreedingSchedule schedule = scheduleRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Schedule item not found"));
+        schedule.setTitle(incoming.getTitle());
+        schedule.setType(incoming.getType());
+        schedule.setDescription(incoming.getDescription());
+        schedule.setSpecies(incoming.getSpecies());
+        schedule.setScheduledDate(incoming.getScheduledDate());
+        schedule.setNotes(incoming.getNotes());
+        schedule.setReminderType(incoming.getReminderType());
+        return scheduleRepository.save(schedule);
+    }
+    
+    public void delete(Long id) {
+        if (!scheduleRepository.existsById(id)) {
+            throw new RuntimeException("Schedule item not found");
+        }
+        scheduleRepository.deleteById(id);
+    }
+    
     public List<BreedingSchedule> getAnimalSchedule(Long animalId) {
         return scheduleRepository.findByAnimalIdAndCompletedFalse(animalId);
     }

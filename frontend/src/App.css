@@ -135,6 +135,7 @@ body {
   margin: 0 auto;
   padding: var(--spacing-xl) var(--spacing-lg);
   width: 100%;
+  overflow-x: hidden;
 }
 
 /* Page Headers */
@@ -175,6 +176,7 @@ body {
   box-shadow: var(--farm-shadow);
   border: 1px solid rgba(74, 124, 89, 0.1);
   transition: all 0.3s ease;
+  max-width: 100%;
 }
 
 .card:hover {
@@ -354,6 +356,30 @@ body {
 
 .grid-4 {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* Horizontal recommendations row */
+.rec-scroll-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(320px, 1fr);
+  gap: var(--spacing-lg);
+  overflow-x: auto;
+  padding-bottom: var(--spacing-sm);
+  scroll-snap-type: x proximity;
+}
+.rec-scroll-row::-webkit-scrollbar { height: 10px; }
+.rec-scroll-row::-webkit-scrollbar-thumb { background: rgba(74,124,89,0.4); border-radius: 8px; }
+.rec-scroll-row::-webkit-scrollbar-track { background: rgba(0,0,0,0.06); }
+
+.rec-card {
+  border: 1px solid #e0e0e0;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  background: #fff;
+  scroll-snap-align: start;
+  min-width: 320px;
+  max-width: 520px;
 }
 
 /* Statistics Cards */
@@ -706,4 +732,201 @@ body {
 .gap-3 { gap: var(--spacing-md); }
 .gap-4 { gap: var(--spacing-lg); }
 .gap-5 { gap: var(--spacing-xl); }
+
+/* Add creamy analysis result styling */
+.creamy-analysis-frame {
+  background: #F8F8F8;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px 0 rgba(80,100,120,0.08);
+  padding: 2rem 2.5rem;
+  margin-bottom: 2.5rem;
+  margin-top: 1.5rem;
+  transition: box-shadow 0.2s;
+}
+
+/* Offspring Prediction Table */
+.offspring-prediction-table {
+  width: 100%;
+  min-width: 1100px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 2px 12px 0 rgba(80,100,120,0.09);
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.offspring-prediction-table th,
+.offspring-prediction-table td {
+  padding: 0.85rem 1.25rem;
+  text-align: left;
+  vertical-align: top;
+}
+.offspring-prediction-table th {
+  background: #fafafa;
+  color: #527057;
+  font-weight: 700;
+}
+.offspring-prediction-table tr:nth-child(odd) {
+  background: #fcfcfc;
+}
+.offspring-prediction-table tr:nth-child(even) {
+  background: #f6f7f9;
+}
+
+/* Compact variant to reduce spacing and font size */
+.compact-table {
+  table-layout: fixed;
+}
+.compact-table th,
+.compact-table td {
+  padding: 0.5rem 0.8rem;
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+.compact-table th {
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.compact-table td {
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* Wrapper to allow horizontal scroll on small widths and avoid text clashing */
+.prediction-table-wrapper {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-width: 100%;
+  max-height: 360px;
+  border: 1px solid #e6e8eb;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.prediction-table-wrapper::-webkit-scrollbar {
+  height: 10px;
+}
+.prediction-table-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(74,124,89,0.4);
+  border-radius: 8px;
+}
+.prediction-table-wrapper::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.06);
+}
+
+/* Card/Title enhancements with animal vibe */
+.prediction-table-card {
+  background: #fbf9ef !important;
+  border: 1px solid #e7ead9;
+  box-shadow: 0 4px 16px rgba(74,124,89,0.12);
+}
+.prediction-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #3f6b4d;
+  margin-bottom: 0.5rem;
+}
+.prediction-title .emoji {
+  font-size: 1.35rem;
+}
+
+.table-center { text-align: center; }
+.table-right { text-align: right; }
+.metric { color: #3a4a3f; font-weight: 600; }
+.score-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(74,124,89,0.12);
+  color: #2d5a3d;
+  border: 1px solid rgba(74,124,89,0.25);
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+/* Enhanced Session Cards/Table for stored sessions */
+.stored-session-table {
+  width: 100%;
+  background: #fcfcfc;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px 0 rgba(80,100,120,0.10);
+  margin-top: 2.5rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+}
+.stored-session-table th, .stored-session-table td {
+  padding: 0.8rem 1rem;
+  text-align: left;
+}
+.stored-session-table th {
+  color: #5d7660;
+  background: #f3f6f2;
+  font-weight: 600;
+}
+.stored-session-table tr {
+  transition: background 0.12s;
+}
+.stored-session-table tr:hover {
+  background: #f7fdec;
+}
+.stored-session-table td.icon-cell {
+  width: 40px;
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+.enhanced-session-card {
+  background: #fafafa;
+  border: 1px solid #e0e7ea;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px 0 rgba(80,100,120,0.06);
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 1.5rem;
+  margin-top: 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+.enhanced-session-card .icon-cell {
+  flex: 0 0 40px;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+}
+
+/* Enhance analysis tables */
+.analysis-section table {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 10px 0 rgba(80,100,120,0.05);
+  table-layout: fixed;
+  width: 100%;
+  word-break: break-word;
+}
+.analysis-section th, .analysis-section td {
+  padding: 0.7rem 1rem;
+}
+.analysis-section th {
+  background: #f1f5f9;
+  color: #57696a;
+  font-weight: 600;
+}
+.analysis-section tr:nth-child(odd) {
+  background: #fbfcfc;
+}
+.analysis-section tr:nth-child(even) {
+  background: #f7f8f9;
+}
 

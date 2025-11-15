@@ -19,7 +19,7 @@ public class AnimalService {
         return animalRepository.findAll();
     }
     public Animal getAnimalById(Long id) {
-        return animalRepository.getReferenceById(id);
+        return animalRepository.findById(id).orElse(null);
     }
 
     public Animal saveAnimal(Animal animal) {
@@ -27,9 +27,8 @@ public class AnimalService {
     }
 
     public String deleteAnimalById(Long id) {
-        Animal animal = animalRepository.getReferenceById(id);
-        animalRepository.delete(animal);
-        return "Animal deleted: {" + animal.toString()+"}";
+        animalRepository.deleteById(id);
+        return "Animal deleted: {id=" + id + "}";
     }
 
     public List<Animal> getBreedingCandidates(Animal.Gender gender, Integer minScore) {

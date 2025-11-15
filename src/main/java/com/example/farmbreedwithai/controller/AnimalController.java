@@ -43,12 +43,28 @@ public class AnimalController {
     @PutMapping("/{id}")
     public ResponseEntity<Animal> updateAnimal(@PathVariable Long id, @RequestBody Animal animal) {
         Animal existingAnimal = animalService.getAnimalById(id);
-        if (existingAnimal != null) {
-            animal.setId(id);
-            return ResponseEntity.ok(animalService.saveAnimal(animal));
-        } else {
+        if (existingAnimal == null) {
             return ResponseEntity.notFound().build();
         }
+
+        if (animal.getName() != null && !animal.getName().isBlank()) existingAnimal.setName(animal.getName());
+        if (animal.getType() != null && !animal.getType().isBlank()) existingAnimal.setType(animal.getType());
+        if (animal.getBreed() != null && !animal.getBreed().isBlank()) existingAnimal.setBreed(animal.getBreed());
+        if (animal.getGender() != null) existingAnimal.setGender(animal.getGender());
+        if (animal.getBirthDate() != null) existingAnimal.setBirthDate(animal.getBirthDate());
+        if (animal.getPhotoUrl() != null) existingAnimal.setPhotoUrl(animal.getPhotoUrl());
+        if (animal.getWeight() != null) existingAnimal.setWeight(animal.getWeight());
+        if (animal.getHealthStatus() != null) existingAnimal.setHealthStatus(animal.getHealthStatus());
+        if (animal.getBreedingStatus() != null) existingAnimal.setBreedingStatus(animal.getBreedingStatus());
+        if (animal.getBreedingScore() != null) existingAnimal.setBreedingScore(animal.getBreedingScore());
+        if (animal.getGeneticsTraits() != null && !animal.getGeneticsTraits().isBlank()) existingAnimal.setGeneticsTraits(animal.getGeneticsTraits());
+        if (animal.getTemperament() != null && !animal.getTemperament().isBlank()) existingAnimal.setTemperament(animal.getTemperament());
+        if (animal.getColor() != null && !animal.getColor().isBlank()) existingAnimal.setColor(animal.getColor());
+        if (animal.getSize() != null && !animal.getSize().isBlank()) existingAnimal.setSize(animal.getSize());
+        if (animal.getNotes() != null && !animal.getNotes().isBlank()) existingAnimal.setNotes(animal.getNotes());
+        if (animal.getOffSpringCount() != null) existingAnimal.setOffSpringCount(animal.getOffSpringCount());
+
+        return ResponseEntity.ok(animalService.saveAnimal(existingAnimal));
     }
 
     @DeleteMapping("/{id}")

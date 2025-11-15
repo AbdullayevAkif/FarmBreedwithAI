@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { aiAdvisorAPI } from '../services/api';
 import toast from 'react-hot-toast';
+import AnimalRaisingGuide from '../components/AnimalRaisingGuide';
 
 const AIAdvisor = () => {
   const [question, setQuestion] = useState('');
@@ -142,121 +143,100 @@ const AIAdvisor = () => {
       </div>
 
       <div className="ai-advisor-content">
-        <div className="chat-section">
-          <div className="section-card">
-            <h2 className="section-title">
-              <MessageCircle className="farm-icon" />
-              Ask Your Question
-            </h2>
-
-            <form onSubmit={handleSubmit} className="question-form">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-input question-input"
-                  placeholder="Ask anything about animal breeding, genetics, or farm management..."
-                  value={question}
-                  onChange={(e) => setQuestion(e.target.value)}
-                  disabled={isLoading}
-                />
-                <button
-                  type="button"
-                  className={`voice-btn ${isRecording ? 'recording' : ''}`}
-                  onClick={handleVoiceCommand}
-                  disabled={isLoading}
-                >
-                  {isRecording ? <MicOff size={20} /> : <Mic size={20} />}
-                </button>
-                <button
-                  type="submit"
-                  className="btn-primary send-btn"
-                  disabled={isLoading || !question.trim()}
-                >
-                  {isLoading ? (
-                    <div className="loading-spinner"></div>
-                  ) : (
-                    <Send size={16} />
-                  )}
-                </button>
-              </div>
-            </form>
-
-            {response && (
-              <div className="ai-response">
-                <div className="response-header">
-                  <Brain className="response-icon" />
-                  <span>AI Advisor Response</span>
-                </div>
-                <div className="response-content">
-                  {response}
-                </div>
-              </div>
-            )}
-
-            {chatHistory.length > 0 && (
-              <div className="chat-history">
-                <h3>Conversation History</h3>
-                <div className="chat-messages">
-                  {chatHistory.map((message, index) => (
-                    <div key={index} className={`chat-message ${message.type}`}>
-                      <div className="message-content">
-                        {message.content}
-                      </div>
-                      <div className="message-time">
-                        {message.timestamp.toLocaleTimeString()}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
+        
         <div className="sidebar-section">
           <div className="section-card">
-            <h2 className="section-title">
-              <Lightbulb className="farm-icon" />
-              Quick Questions
-            </h2>
-            <div className="quick-questions">
-              {quickQuestions.map((quickQuestion, index) => (
-                <button
-                  key={index}
-                  className="quick-question-btn"
-                  onClick={() => handleQuickQuestion(quickQuestion)}
-                  disabled={isLoading}
-                >
-                  <HelpCircle size={16} />
-                  {quickQuestion}
-                </button>
-              ))}
+            <div className="raising-guide-section">
+              <AnimalRaisingGuide />
             </div>
-          </div>
 
-          <div className="section-card">
-            <h2 className="section-title">
-              <BookOpen className="farm-icon" />
-              Breeding Tips
-            </h2>
-            <div className="breeding-tips">
-              <div className="tip-item">
-                <h4>Optimal Breeding Age</h4>
-                <p>Most farm animals reach breeding maturity at 12-18 months, depending on species and breed.</p>
-              </div>
-              <div className="tip-item">
-                <h4>Genetic Diversity</h4>
-                <p>Maintain genetic diversity by avoiding close relatives and introducing new bloodlines periodically.</p>
-              </div>
-              <div className="tip-item">
-                <h4>Health Assessment</h4>
-                <p>Always ensure animals are in excellent health before breeding to maximize success rates.</p>
-              </div>
-              <div className="tip-item">
-                <h4>Record Keeping</h4>
-                <p>Maintain detailed records of breeding history, genetics, and offspring performance.</p>
-              </div>
-            </div>
+            <style jsx>{`
+              .raising-guide-section {
+                margin-top: 30px;
+              }
+              
+              .animal-raising-guide {
+                background-color: #f8f9fa;
+                border-radius: 8px;
+                padding: 20px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+              }
+              
+              .guide-intro {
+                color: #555;
+                margin-bottom: 20px;
+              }
+              
+              .animal-section {
+                margin-bottom: 15px;
+                border: 1px solid #e0e0e0;
+                border-radius: 6px;
+                overflow: hidden;
+              }
+              
+              .section-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 15px;
+                background-color: #4caf50;
+                color: white;
+                cursor: pointer;
+                transition: background-color 0.3s;
+              }
+              
+              .section-header:hover {
+                background-color: #3e8e41;
+              }
+              
+              .section-header.active {
+                background-color: #2e7d32;
+              }
+              
+              .section-content {
+                padding: 15px;
+                background-color: white;
+              }
+              
+              .stage-card {
+                margin-bottom: 15px;
+                padding: 15px;
+                border-left: 3px solid #4caf50;
+                background-color: #f9f9f9;
+              }
+              
+              .stage-card h4 {
+                color: #2e7d32;
+                margin-top: 0;
+                margin-bottom: 10px;
+              }
+              
+              .stage-details {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+              }
+              
+              .detail-item {
+                padding: 8px;
+              }
+              
+              .detail-item strong {
+                display: block;
+                margin-bottom: 5px;
+                color: #333;
+              }
+              
+              .detail-item.recipe {
+                background-color: #f0f7f0;
+                border-radius: 4px;
+                padding: 10px;
+              }
+              
+              .detail-item.recipe strong {
+                color: #2e7d32;
+              }
+            `}</style>
           </div>
 
           <div className="section-card">

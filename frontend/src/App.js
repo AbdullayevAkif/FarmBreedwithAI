@@ -13,7 +13,6 @@ import Animals from './pages/Animals';
 import Breeding from './pages/Breeding';
 import BreedingBox from './pages/BreedingBox';
 import AIAdvisor from './pages/AIAdvisor';
-import Schedule from './pages/Schedule';
 import Profile from './pages/Profile';
 import './App.css';
 
@@ -81,14 +80,6 @@ function App() {
                   element={
                     <ProtectedRoute>
                       <AIAdvisor />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/schedule"
-                  element={
-                    <ProtectedRoute>
-                      <Schedule />
                     </ProtectedRoute>
                   }
                 />

@@ -18,4 +18,13 @@ public class AIAnalysisResponse {
     private String traits;
     private String recommendations;
     private Double confidence;
+    private String color;
+    private String size;
+    private Double weight;
+    private String temperament;
+    private Double milkYield;
+    private Integer meatScore;
+    private Integer fertilityScore;
+    private String notes;
+    private String geneticsTraitsDetails;
 }

@@ -24,8 +24,14 @@ export const AuthProvider = ({ children }) => {
           setUser(userData);
         } catch (error) {
           console.error('Failed to get current user:', error);
-          localStorage.removeItem('token');
-          setToken(null);
+          if (error?.response?.status === 401) {
+            localStorage.removeItem('token');
+            setToken(null);
+            setUser(null);
+          } else {
+            // Keep token for non-auth errors (e.g., 404 /auth/me not implemented, 5xx)
+            // User will remain unauthenticated until they navigate or refresh.
+          }
         }
       }
       setLoading(false);
@@ -37,12 +43,16 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await authAPI.login(email, password);
-      const { token: newToken, ...userData } = response;
-      
+      const newToken = response?.token || response?.accessToken || response?.jwt;
+      if (!newToken) {
+        return { success: false, error: 'Login response missing token' };
+      }
+
+      const userData = response?.user || response;
+
       localStorage.setItem('token', newToken);
       setToken(newToken);
       setUser(userData);
-      
       return { success: true };
     } catch (error) {
       return { 

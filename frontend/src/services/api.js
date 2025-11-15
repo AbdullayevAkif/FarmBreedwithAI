@@ -1,9 +1,17 @@
 import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
+const AI_API_BASE_URL = process.env.REACT_APP_AI_API_URL || 'http://localhost:9091/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+const aiApi = axios.create({
+  baseURL: AI_API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -63,12 +71,23 @@ export const breedingAPI = {
     }).then(res => res.data),
   getRecommendations: (animalId) => 
     api.get(`/breeding/recommendations/${animalId}`).then(res => res.data),
+  getSmartRecommendations: (payload) => 
+    api.post('/breeding/smart-recommendations', payload).then(res => res.data),
+  getBreedingHistory: () => api.get('/breeding-box/breeding/history').then(res => res.data),
 };
 
 export const breedingBoxAPI = {
   analyze: (request) => api.post('/breeding-box/analyze', request).then(res => res.data),
   getAllSessions: () => api.get('/breeding-box/sessions').then(res => res.data),
   getSession: (id) => api.get(`/breeding-box/sessions/${id}`).then(res => res.data),
+  deepAnalyze: (request) => api.post('/breeding-box/deep-analyze', request).then(res => res.data),
+  predictOffspring: (motherId, fatherId, species) => api.post('/breeding-box/predict-offspring', { motherId, fatherId, species }).then(res => res.data),
+  createSession: (analysis) => api.post('/breeding-box/sessions', analysis).then(res => res.data),
+  getHybridInfo: (breed1, breed2) => aiApi.post('/breeding/get-hybrid-info', { breed1, breed2 }).then(res => res.data),
+};
+
+export const aiBreedingAPI = {
+  getSmartRecommendations: (payload) => api.post('/ai/smart-recommendations-proxy', payload).then(res => res.data),
 };
 
 export const aiAdvisorAPI = {
@@ -77,13 +96,18 @@ export const aiAdvisorAPI = {
     api.post('/ai-advisor/voice-command', voiceInput).then(res => res.data),
   submitQuestionAnswers: (animalId, questionResponse) => 
     api.post(`/ai-advisor/questions/${animalId}`, questionResponse).then(res => res.data),
+  generateCarePlan: (breedData) => 
+    api.post('/ai-advisor/generate-care-plan', breedData).then(res => res.data),
 };
 
 export const scheduleAPI = {
   getUpcoming: () => api.get('/schedule/upcoming').then(res => res.data),
   getWeekly: () => api.get('/schedule/week').then(res => res.data),
   create: (schedule) => api.post('/schedule/create', schedule).then(res => res.data),
+  createHatching: (payload) => api.post('/schedule/create-hatching', payload).then(res => res.data),
   markComplete: (id) => api.put(`/schedule/${id}/complete`).then(res => res.data),
+  update: (id, data) => api.put(`/schedule/${id}`, data).then(res => res.data),
+  delete: (id) => api.delete(`/schedule/${id}`).then(res => res.data),
 };
 
 export const uploadAPI = {
@@ -108,6 +132,11 @@ export const uploadAPI = {
 export const healthAPI = {
   getStatus: () => api.get('/health/status').then(res => res.data),
   checkDatabase: () => api.get('/health/database').then(res => res.data),
+};
+
+export const statsAPI = {
+  get: (key) => api.get(`/stats/${encodeURIComponent(key)}`).then(res => res.data),
+  increment: (key) => api.post(`/stats/${encodeURIComponent(key)}/increment`).then(res => res.data),
 };
 
 export default api;

@@ -3,6 +3,11 @@ package com.example.farmbreedwithai.controller;
 import com.example.farmbreedwithai.dto.BreedingBoxRequest;
 import com.example.farmbreedwithai.dto.BreedingBoxResponse;
 import com.example.farmbreedwithai.entity.BreedingBox;
+import com.example.farmbreedwithai.dto.SelectedBreedingBoxRequest;
+import com.example.farmbreedwithai.dto.DetailedBreedingAnalysisResponse;
+import com.example.farmbreedwithai.dto.OffspringPredictionRequest;
+import com.example.farmbreedwithai.dto.OffspringPrediction;
+
 import com.example.farmbreedwithai.repository.BreedingBoxRepository;
 import com.example.farmbreedwithai.service.BreedingBoxService;
 import lombok.RequiredArgsConstructor;
@@ -35,5 +40,26 @@ public class BreedingBoxController {
         return breedingBoxRepository.findById(id)
             .map(ResponseEntity::ok)
             .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/breeding/history")
+    public ResponseEntity<List<Object>> getBreedingHistory() {
+        return ResponseEntity.ok(java.util.Collections.emptyList());
+    }
+
+    @PostMapping("/deep-analyze")
+    public ResponseEntity<DetailedBreedingAnalysisResponse> deepAnalyze(@RequestBody SelectedBreedingBoxRequest request) {
+        DetailedBreedingAnalysisResponse resp = breedingBoxService.deepAnalyzeSelected(request);
+        return ResponseEntity.ok(resp);
+    }
+
+    @PostMapping("/predict-offspring")
+    public ResponseEntity<OffspringPrediction> predictOffspring(@RequestBody OffspringPredictionRequest request) {
+        return ResponseEntity.ok(breedingBoxService.predictOffspring(request));
+    }
+
+    @PostMapping("/sessions")
+    public ResponseEntity<BreedingBox> createSession(@RequestBody DetailedBreedingAnalysisResponse response) {
+        return ResponseEntity.ok(breedingBoxService.saveSessionFromAnalysis(response));
     }
 }

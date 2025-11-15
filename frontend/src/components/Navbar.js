@@ -19,7 +19,6 @@ const Navbar = () => {
     { path: '/breeding', label: 'Breeding', emoji: '💕' },
     { path: '/breeding-box', label: 'Breeding Box', emoji: '🧬' },
     { path: '/ai-advisor', label: 'AI Advisor', emoji: '🤖' },
-    { path: '/schedule', label: 'Schedule', emoji: '📅' },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -52,22 +51,11 @@ const Navbar = () => {
           </div>
 
           <div className="navbar-user">
-            <div className="user-info">
-              <div className="user-avatar">
-                <span className="emoji">👤</span>
-              </div>
-              <div className="user-details">
-                <div className="user-name">{user?.firstName} {user?.lastName}</div>
-                <div className="user-farm">{user?.farmName}</div>
-              </div>
-            </div>
-            <Link to="/profile" className="nav-link">
+            <Link to="/profile" className="user-avatar" title="Profile">
               <span className="emoji">👤</span>
-              <span>Profile</span>
             </Link>
-            <button onClick={handleLogout} className="btn btn-outline">
+            <button onClick={handleLogout} className="btn btn-outline" title="Logout">
               <span className="emoji">🚪</span>
-              <span>Logout</span>
             </button>
           </div>
         </div>
